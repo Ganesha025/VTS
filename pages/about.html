@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - Vetri Technology Solutions</title>
+  <link rel="icon" href="https://www.vetritechnologysolutions.in/assets/vtslogo-zrKmCM12.jpg">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandGreen: '#22b449',
+            brandLightGreen: '#7cbc37',
+            brandDarkGreen: '#1a8a37',
+            brandAccent: '#4f46e5',
+            brandSecondary: '#059669',
+            brandNeutral: '#64748b'
+          },
+          fontFamily: {
+            'display': ['Inter', 'system-ui', 'sans-serif'],
+            'body': ['Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .hero-gradient { background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 50%, #ecfdf5 100%); }
+    .glass-effect { backdrop-filter: blur(20px); background: rgba(255, 255, 255, 0.9); }
+    .card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .card-hover:hover { transform: translateY(-8px); }
+    .gradient-text { background: linear-gradient(135deg, #22b449 0%, #7cbc37 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .section-padding { padding: 5rem 0; }
+    .container-width { max-width: 1200px; margin: 0 auto; }
+    .timeline-item:not(:last-child):after {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 24px;
+      height: calc(100% - 24px);
+      width: 2px;
+      background: #22b449;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+<header class="fixed w-full top-0 z-50 glass-effect border-b border-gray-100" id="HeaderData">
+</header>
+
+<section class="hero-gradient pt-32 pb-20">
+  <div class="container-width px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl lg:text-6xl font-bold leading-tight mb-6">
+        About <span class="gradient-text">Vetri Technology Solutions</span>
+      </h1>
+      <p class="text-xl text-gray-600 leading-relaxed">
+        Empowering the next generation of IT professionals through innovative training and real-world experience.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="mission" class="section-padding bg-white">
+  <div class="container-width px-6">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="space-y-8">
+        <h2 class="text-4xl font-bold mb-6">Our <span class="gradient-text">Mission & Vision</span></h2>
+        
+        <div class="space-y-6">
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0 mt-1">
+              <div class="w-10 h-10 rounded-full bg-brandGreen/10 flex items-center justify-center">
+                <svg class="w-5 h-5 text-brandGreen" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold text-gray-900">Mission</h3>
+              <p class="text-gray-600 mt-1">
+                To bridge the gap between academic knowledge and industry requirements by providing comprehensive IT training with 100% placement assurance.
+              </p>
+            </div>
+          </div>
+          
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0 mt-1">
+              <div class="w-10 h-10 rounded-full bg-brandGreen/10 flex items-center justify-center">
+                <svg class="w-5 h-5 text-brandGreen" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold text-gray-900">Vision</h3>
+              <p class="text-gray-600 mt-1">
+                To become India's premier IT training institute that transforms students into industry-ready professionals through practical, hands-on learning experiences.
+              </p>
+            </div>
+          </div>
+          
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0 mt-1">
+              <div class="w-10 h-10 rounded-full bg-brandGreen/10 flex items-center justify-center">
+                <svg class="w-5 h-5 text-brandGreen" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold text-gray-900">Core Values</h3>
+              <p class="text-gray-600 mt-1">
+                Excellence, Innovation, Integrity, Student Success, and Continuous Improvement form the foundation of everything we do.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="relative">
+        <div class="absolute inset-0 bg-gradient-to-r from-brandGreen/20 to-brandLightGreen/20 rounded-3xl transform rotate-6"></div>
+        <div class="relative bg-white rounded-3xl shadow-2xl overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Our Team" class="w-full h-auto">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="history" class="section-padding bg-gray-50">
+  <div class="container-width px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-bold mb-4">Our <span class="gradient-text">Journey</span></h2>
+      <p class="text-xl text-gray-600">From humble beginnings to becoming a leader in IT education</p>
+    </div>
+    
+    <div class="max-w-3xl mx-auto">
+      <div class="space-y-8">
+        <div class="timeline-item relative pl-8">
+          <div class="absolute left-0 w-4 h-4 rounded-full bg-brandGreen border-4 border-white z-10"></div>
+          <div class="bg-white p-6 rounded-xl shadow-md">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Founded in 2018</h3>
+            <p class="text-gray-600">
+              Vetri Technology Solutions was established with a vision to provide quality IT training in Surandai, Tamil Nadu, focusing on practical skills and job readiness.
+            </p>
+          </div>
+        </div>
+        
+        <div class="timeline-item relative pl-8">
+          <div class="absolute left-0 w-4 h-4 rounded-full bg-brandGreen border-4 border-white z-10"></div>
+          <div class="bg-white p-6 rounded-xl shadow-md">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">First Batch Graduates (2019)</h3>
+            <p class="text-gray-600">
+              Our inaugural batch of 15 students completed their training, with all graduates securing positions in our partner companies.
+            </p>
+          </div>
+        </div>
+        
+        <div class="timeline-item relative pl-8">
+          <div class="absolute left-0 w-4 h-4 rounded-full bg-brandGreen border-4 border-white z-10"></div>
+          <div class="bg-white p-6 rounded-xl shadow-md">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Vetri IT Systems Launch (2020)</h3>
+            <p class="text-gray-600">
+              We established Vetri IT Systems Private Limited, our own IT services company, to provide guaranteed placements for our graduates.
+            </p>
+          </div>
+        </div>
+        
+        <div class="timeline-item relative pl-8">
+          <div class="absolute left-0 w-4 h-4 rounded-full bg-brandGreen border-4 border-white z-10"></div>
+          <div class="bg-white p-6 rounded-xl shadow-md">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">200+ Graduates (2023)</h3>
+            <p class="text-gray-600">
+              Celebrated our 200th graduate, maintaining our 100% placement record and expanding our course offerings to meet industry demands.
+            </p>
+          </div>
+        </div>
+        
+        <div class="timeline-item relative pl-8">
+          <div class="absolute left-0 w-4 h-4 rounded-full bg-brandGreen border-4 border-white z-10"></div>
+          <div class="bg-white p-6 rounded-xl shadow-md">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Future Goals</h3>
+            <p class="text-gray-600">
+              Planning to expand our training centers across Tamil Nadu and develop specialized programs in emerging technologies like AI and Blockchain.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="team" class="section-padding bg-white">
+  <div class="container-width px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-bold mb-4">Meet Our <span class="gradient-text">Leadership Team</span></h2>
+      <p class="text-xl text-gray-600">Experienced professionals dedicated to your success</p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover border border-gray-100">
+        <div class="relative h-64">
+          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Founder" class="w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <h3 class="font-bold text-xl mb-1">Mr. Vetri Vel</h3>
+          <p class="text-brandGreen font-medium mb-4">Founder & CEO</p>
+          <p class="text-gray-600 text-sm">
+            With over 10 years of experience in IT training and consulting, Vetri established VTS to bridge the skills gap in the industry.
+          </p>
+        </div>
+      </div>
+      
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover border border-gray-100">
+        <div class="relative h-64">
+          <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Training Head" class="w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <h3 class="font-bold text-xl mb-1">Ms. Priya Kumar</h3>
+          <p class="text-brandGreen font-medium mb-4">Training Head</p>
+          <p class="text-gray-600 text-sm">
+            Former senior developer with expertise in full-stack technologies, now leading our curriculum development and instructor team.
+          </p>
+        </div>
+      </div>
+      
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover border border-gray-100">
+        <div class="relative h-64">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Placement Officer" class="w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <h3 class="font-bold text-xl mb-1">Mr. Arun Joshi</h3>
+          <p class="text-brandGreen font-medium mb-4">Placement Officer</p>
+          <p class="text-gray-600 text-sm">
+            Connects our students with top employers and manages our 100% placement guarantee program through Vetri IT Systems.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-padding bg-gradient-to-r from-brandGreen to-brandLightGreen">
+  <div class="container-width px-6">
+    <div class="max-w-4xl mx-auto text-center text-white">
+      <h2 class="text-3xl lg:text-4xl font-bold mb-6">Ready to Transform Your Career?</h2>
+      <p class="text-xl mb-8 opacity-90">
+        Join our next batch of aspiring IT professionals and take the first step toward a rewarding career in technology.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="index.html#programs" class="bg-white text-brandGreen px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all inline-flex items-center justify-center">
+          View Programs
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+          </svg>
+        </a>
+        <a href="index.html#contact" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white/10 transition-all inline-flex items-center justify-center">
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-gray-900 text-white section-padding" id="FooterData">
+</footer>
+<script src="../header.js"></script>
+<script>
+  document.getElementById('mobile-toggle').onclick = () => {
+    console.log('Mobile menu toggle clicked');
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Instagram Profile Clone</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fadeIn { from { opacity: 0; transform: scale(.96);} to { opacity: 1; transform: scale(1);} }
+    .modal-animate { animation: fadeIn .25s ease-out; }
+  </style>
+</head>
+<body class="min-h-screen bg-white text-gray-900">
+
+  <header class="max-w-5xl mx-auto p-6 mt-6 rounded-2xl border border-[#22b449]/20 bg-white shadow-[0_10px_30px_rgba(34,180,73,.08)]">
+    <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+        <img id="profile-avatar" src="https://www.vetritechnologysolutions.in/assets/vtslogo-zrKmCM12.jpg" alt="Avatar" class="w-28 h-28 rounded-full object-cover bg-white" />
+      <div class="flex-1 text-center md:text-left">
+        <h1 class="text-3xl font-bold bg-clip-text text-transparent" style="background-image:linear-gradient(90deg,#22b449,#7cbc37);">Vetri IT</h1>
+        <p class="mt-2 text-gray-700">WEB & APP Dev 🌍 | Leading the Digital world</p>
+        <div class="mt-4 flex items-center justify-center md:justify-start gap-3">
+          <span class="px-3 py-1 text-sm rounded-full text-white cursor-pointer" style="background:#22b449;">Follow</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto p-6">
+    <div id="posts-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+  </main>
+
+  <div id="modal" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300 z-50">
+    <div class="relative max-w-5xl w-full modal-animate">
+      <button id="modal-close" class="absolute -top-10 right-0 text-white text-4xl font-bold transition-transform hover:scale-110">&times;</button>
+      <img id="modal-img" src="" alt="Full View" class="w-full max-h-[85vh] object-contain rounded-xl border shadow-2xl" style="border-color:#22b44933;" />
+      <div id="modal-info" class="mt-4 text-center text-base"></div>
+    </div>
+  </div>
+
+<script src="../data.js"></script>
+<script>
+  const postsGrid = document.getElementById('posts-grid');
+  const modal = document.getElementById('modal');
+  const modalImg = document.getElementById('modal-img');
+  const modalInfo = document.getElementById('modal-info');
+  const modalClose = document.getElementById('modal-close');
+  const searchInput = document.getElementById('search');
+
+  function openModal(index) {
+    const post = posts[index];
+    if (!post) return;
+    modalImg.src = post.src;
+    modalInfo.innerHTML = `<span class="px-3 py-1 rounded-full text-white" style="background:#7cbc37;">${post.description || ''}</span>`;
+    modal.classList.remove('opacity-0', 'pointer-events-none');
+    history.pushState(null, '', `?post=${index}`);
+  }
+
+  function closeModal() {
+    modal.classList.add('opacity-0', 'pointer-events-none');
+    modalImg.src = '';
+    modalInfo.textContent = '';
+    history.pushState(null, '', window.location.pathname);
+  }
+
+  function makeCard(post, index) {
+    const div = document.createElement('div');
+    div.className = "group overflow-hidden rounded-2xl bg-white border transition-all duration-300 shadow hover:shadow-xl";
+    div.style.borderColor = "#22b44922";
+    div.innerHTML = `
+      <div class="relative">
+        <img src="${post.src}" alt="Post Image" class="w-full aspect-square object-cover transition-transform duration-500 group-hover:scale-105" />
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+          <div class="w-full p-3 text-sm text-white" style="background:linear-gradient(0deg,rgba(0,0,0,.55),transparent);">${post.description || ''}</div>
+        </div>
+      </div>
+    `;
+    div.addEventListener('click', () => openModal(index));
+    return div;
+  }
+
+  function render(list) {
+    postsGrid.innerHTML = '';
+    list.forEach((p, i) => postsGrid.appendChild(makeCard(p, i)));
+  }
+
+  render(posts);
+
+  searchInput?.addEventListener('input', (e) => {
+    const q = e.target.value.toLowerCase();
+    const filtered = posts.filter(p => (p.description || '').toLowerCase().includes(q));
+    render(filtered);
+  });
+
+  modalClose.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.classList.contains('opacity-0')) closeModal(); });
+
+  window.addEventListener('load', () => {
+    const params = new URLSearchParams(window.location.search);
+    const postIndex = params.get('post');
+    if (postIndex !== null && !isNaN(postIndex) && posts[postIndex]) openModal(postIndex);
+  });
+
+  window.addEventListener('popstate', () => {
+    const params = new URLSearchParams(window.location.search);
+    const postIndex = params.get('post');
+    if (postIndex !== null && !isNaN(postIndex) && posts[postIndex]) openModal(postIndex);
+    else closeModal();
+  });
+</script>
+</body>
+</html>

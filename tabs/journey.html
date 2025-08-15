@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VTS Journey</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        animation: {
+          'spin-slow': 'spin 1s linear infinite',
+        }
+      }
+    }
+  }
+</script>
+<style>
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .gradient-overlay {
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  }
+  .avatar-gradient {
+    background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+  }
+</style>
+</head>
+<body class="m-0 p-0 h-full bg-white text-black font-sans overflow-hidden">
+
+<div class="flex h-screen bg-white">
+  <div class="w-70 bg-white border-r border-gray-700 p-4 flex flex-col overflow-y-auto md:flex hidden">
+    <div class="px-3 py-4 pb-6 text-xl flex flex-wrap justify-evenly items-center font-bold text-black border-b border-gray-700 mb-4">
+    <img src="https://www.vetritechnologysolutions.in/assets/vtslogo-zrKmCM12.jpg" style="height: 100px; width: 100px;" class="mb-4">
+      Vetri IT
+    </div>
+    <div id="videoThumbnails" class="space-y-1">
+    </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="flex-1 flex justify-center items-center bg-black text-white">
+    <div class="w-96 md:w-[405px] h-screen md:h-[720px] bg-white text-black rounded-none md:rounded-lg overflow-hidden relative">
+      <div class="h-full w-full overflow-y-scroll scrollbar-hide" style="scroll-snap-type: y mandatory;" id="reelsContainer">
+        <!-- Reels will be injected here -->
+      </div>
+    </div>
+  </div>
+</div>
+<script src="../data.js"></script>
+<script>
+  
+  const reelsContainer = document.getElementById("reelsContainer");
+  const thumbnailsContainer = document.getElementById("videoThumbnails");
+  let isLiked = {};
+  let currentVideoIndex = 0;
+
+  // Create thumbnails and reels
+  reelsData.forEach((item, index) => {
+    isLiked[index] = false;
+    
+    // Create thumbnail
+    const thumbnail = document.createElement("div");
+    thumbnail.className = `flex p-2 mx-0 my-1 rounded-lg cursor-pointer transition-colors duration-200 border-2 border-transparent hover:bg-white hover:bg-opacity-10 ${index === 0 ? 'bg-white bg-opacity-15 border-white' : ''}`;
+    thumbnail.dataset.index = index;
+    thumbnail.innerHTML = `
+      <div class="w-15 h-20 bg-gray-700 rounded-lg mr-3 overflow-hidden relative">
+        <video src="${item.video}" muted class="w-full h-full object-cover"></video>
+      </div>
+      <div class="flex-1 flex flex-col justify-center border-b border-green-500 rounded-lg">
+        <div class="text-white font-bold text-sm mb-1">@${item.user}</div>
+        <div class="text-green-500 text-xs leading-tight overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">${item.caption.replace(/[#@]\w+/g, '').trim()}</div>
+        <div class="text-gray-400 text-xs mt-1">♥ ${item.likes}</div>
+      </div>
+    `;
+    thumbnailsContainer.appendChild(thumbnail);
+    
+    // Create reel
+    const reel = document.createElement("div");
+    reel.className = "relative w-full h-screen md:h-[720px] bg-black";
+    reel.style.scrollSnapAlign = "start";
+    reel.innerHTML = `
+      <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 border-3 border-white border-opacity-30 border-t-white rounded-full animate-spin-slow"></div>
+      <video src="${item.video}" loop playsinline class="w-full h-full object-cover bg-white text-black"></video>
+      
+      <div class="absolute right-3 bottom-20 md:bottom-20 flex flex-col gap-6 md:gap-6">
+        <div class="text-center">
+          <button class="like-btn w-12 h-12 md:w-12 md:h-12 rounded-full bg-black bg-opacity-60 border-none cursor-pointer flex items-center justify-center transition-transform duration-200 hover:scale-110" data-index="${index}">
+            <svg viewBox="0 0 24 24" class="w-6 h-6 md:w-6 md:h-6 fill-white">
+              <path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.28-.588 1.11-1.766a4.17 4.17 0 013.679-1.938z"/>
+            </svg>
+          </button>
+          <div class="text-white text-xs font-bold text-center mt-1">${item.likes}</div>
+        </div>
+        <div>
+          <button class="w-12 h-12 md:w-12 md:h-12 rounded-full bg-black bg-opacity-60 border-none cursor-pointer flex items-center justify-center transition-transform duration-200 hover:scale-110">
+            <svg viewBox="0 0 24 24" class="w-6 h-6 md:w-6 md:h-6 fill-white">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+            </svg>
+          </button>
+        </div>
+        <div>
+          <button class="w-12 h-12 md:w-12 md:h-12 rounded-full bg-black bg-opacity-60 border-none cursor-pointer flex items-center justify-center transition-transform duration-200 hover:scale-110">
+            <svg viewBox="0 0 24 24" class="w-6 h-6 md:w-6 md:h-6 fill-white">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <div class="absolute bottom-0 left-0 right-15 md:right-15 p-4 md:p-4 gradient-overlay text-white mb-12 md:mb-12">
+        <div class="flex items-center mb-1">
+          <div class="w-8 h-8 md:w-8 md:h-8 rounded-full avatar-gradient mr-3 flex items-center justify-center text-white font-bold text-sm md:text-sm">${item.user.charAt(0).toUpperCase()}</div>
+          <span class="font-bold mr-2 text-sm md:text-base">@${item.user}</span>
+        </div>
+        <div class="text-sm md:text-sm leading-relaxed mb-2">${item.caption}</div>
+      </div>
+    `;
+    reelsContainer.appendChild(reel);
+  });
+
+  // Thumbnail click handler
+  thumbnailsContainer.addEventListener('click', (e) => {
+    const thumbnail = e.target.closest('[data-index]');
+    if (!thumbnail) return;
+    
+    const index = parseInt(thumbnail.dataset.index);
+    
+    // Update active thumbnail
+    document.querySelectorAll('[data-index]').forEach((t, i) => {
+      if (i === index) {
+        t.className = t.className.replace(/bg-white bg-opacity-15 border-white|$/, 'bg-white bg-opacity-15 border-white');
+      } else {
+        t.className = t.className.replace(/bg-white bg-opacity-15 border-white/, '');
+      }
+    });
+    
+    // Scroll to corresponding reel
+    const targetReel = reelsContainer.children[index];
+    targetReel.scrollIntoView({ behavior: 'smooth' });
+    currentVideoIndex = index;
+  });
+
+  // Video intersection observer
+  const videos = document.querySelectorAll("video");
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const video = entry.target;
+      const loading = video.previousElementSibling;
+      const reelIndex = Array.from(videos).indexOf(video);
+      
+      if (entry.isIntersecting) {
+        // Update active thumbnail
+        document.querySelectorAll('[data-index]').forEach((t, i) => {
+          if (i === reelIndex) {
+            t.className = t.className.replace(/bg-white bg-opacity-15 border-white|$/, 'bg-white bg-opacity-15 border-white');
+          } else {
+            t.className = t.className.replace(/bg-white bg-opacity-15 border-white/, '');
+          }
+        });
+        currentVideoIndex = reelIndex;
+        
+        video.currentTime = 0;
+        video.play().then(() => {
+          loading.style.display = 'none';
+        }).catch(() => {
+          loading.style.display = 'none';
+        });
+      } else {
+        video.pause();
+        loading.style.display = 'block';
+      }
+    });
+  }, { threshold: 0.8 });
+
+  videos.forEach(video => {
+    observer.observe(video);
+    
+    // Hide loading when video loads
+    video.addEventListener('loadeddata', () => {
+      const loading = video.previousElementSibling;
+      loading.style.display = 'none';
+    });
+    
+    // Click to play/pause
+    video.addEventListener('click', () => {
+      if (video.paused) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    });
+  });
+
+  // Like button functionality
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.like-btn')) {
+      const btn = e.target.closest('.like-btn');
+      const index = btn.dataset.index;
+      const svg = btn.querySelector('svg path');
+      const countEl = btn.nextElementSibling;
+      
+      isLiked[index] = !isLiked[index];
+      
+      if (isLiked[index]) {
+        svg.style.fill = '#ff3040';
+        btn.style.background = 'rgba(255, 48, 64, 0.2)';
+        btn.style.transform = 'scale(1.2)';
+        setTimeout(() => {
+          btn.style.transform = 'scale(1)';
+        }, 150);
+      } else {
+        svg.style.fill = 'white';
+        btn.style.background = 'rgba(0,0,0,0.6)';
+      }
+    }
+  });
+
+  // Double tap to like on mobile
+  let lastTap = 0;
+  document.addEventListener('touchend', (e) => {
+    const currentTime = new Date().getTime();
+    const tapLength = currentTime - lastTap;
+    if (tapLength < 500 && tapLength > 0) {
+      const video = e.target.closest('.reel')?.querySelector('video');
+      if (video) {
+        const index = Array.from(videos).indexOf(video);
+        const likeBtn = video.parentNode.querySelector('.like-btn');
+        if (likeBtn && !isLiked[index]) {
+          likeBtn.click();
+        }
+      }
+    }
+    lastTap = currentTime;
+  });
+</script>
+
+</body>
+</html>
