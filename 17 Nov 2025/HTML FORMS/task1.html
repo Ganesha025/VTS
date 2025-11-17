@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Movie Review — Submit</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --card:#0f1720;
+      --muted:#9aa6b2;
+      --accent:#1a73e8;
+      --accent-2:#34a853;
+      --glass:rgba(255,255,255,0.04);
+      --radius:14px;
+      --shadow:0 6px 24px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+      --glass-2:rgba(255,255,255,0.02);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Roboto,system-ui,Segoe UI,Arial;
+      background:radial-gradient(1200px 600px at 10% 10%, rgba(26,115,232,0.06), transparent),
+                 radial-gradient(1000px 500px at 90% 90%, rgba(52,168,83,0.03), transparent),
+                 var(--bg);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px;
+    }
+    .container{
+      width:900px;
+      max-width:96vw;
+      border-radius:var(--radius);
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(8px) saturate(120%);
+      overflow:hidden;
+      display:grid;
+      grid-template-columns:360px 1fr;
+      gap:0;
+    }
+    .left{
+      padding:28px 24px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.015));
+      border-right:1px solid var(--glass-2);
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      min-height:420px;
+    }
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{
+      width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#66a9ff);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;color:white;box-shadow:0 6px 24px rgba(26,115,232,0.12)
+    }
+    h1{margin:0;font-size:20px;font-weight:700}
+    p.lead{margin:0;color:var(--muted);font-size:13px;line-height:1.45}
+    .meta{display:flex;gap:10px;align-items:center;margin-top:6px}
+    .chip{padding:6px 10px;border-radius:999px;font-size:13px;background:rgba(255,255,255,0.02);color:var(--muted)}
+    .right{padding:28px 32px;display:flex;flex-direction:column;gap:16px}
+    form{display:flex;flex-direction:column;gap:14px}
+    label.field{display:flex;flex-direction:column;gap:8px;font-size:13px}
+    input[type=text],textarea{background:transparent;border:1px solid var(--glass);padding:12px 14px;border-radius:10px;color:inherit;outline:none;font-size:15px}
+    input[type=text]:focus,textarea:focus{box-shadow:0 6px 20px rgba(26,115,232,0.12);border-color:var(--accent)}
+    .row{display:flex;gap:12px}
+    .row .field{flex:1}
+    textarea{min-height:140px;resize:vertical}
+    .required{color:#ff7a7a;margin-left:6px;font-weight:600}
+    .rating{display:flex;align-items:center;gap:8px}
+    .stars{display:flex;gap:6px}
+    .stars input{display:none}
+    .stars label{font-size:26px;line-height:1;cursor:pointer;user-select:none;padding:4px;border-radius:6px}
+    .stars label:before{content:'★'}
+    .stars label{color:rgba(255,255,255,0.18);transition:transform .15s ease,color .15s ease}
+    .stars label:hover{transform:translateY(-6%) scale(1.06);color:var(--accent)}
+    .stars input:checked ~ label, .stars label.checked{color:var(--accent)}
+    .stars input:checked ~ label ~ label{color:rgba(255,255,255,0.18)}
+    .stars input[id="r5"]:checked ~ label[for="r5"],
+    .stars input[id="r4"]:checked ~ label[for="r4"],
+    .stars input[id="r3"]:checked ~ label[for="r3"],
+    .stars input[id="r2"]:checked ~ label[for="r2"],
+    .stars input[id="r1"]:checked ~ label[for="r1"]{color:var(--accent)}
+    .toggle{display:inline-flex;align-items:center;gap:10px}
+    .checkbox{width:46px;height:28px;border-radius:999px;background:rgba(255,255,255,0.03);display:inline-flex;padding:3px;align-items:center;cursor:pointer;border:1px solid var(--glass)}
+    .knob{height:22px;width:22px;border-radius:50%;background:#fff;box-shadow:0 6px 14px rgba(2,6,23,0.6);transform:translateX(0);transition:transform .2s cubic-bezier(.2,.9,.2,1)}
+    input[type=checkbox]{display:none}
+    input[type=checkbox]:checked + .checkbox{background:linear-gradient(90deg,var(--accent),#66a9ff);border-color:transparent}
+    input[type=checkbox]:checked + .checkbox .knob{transform:translateX(18px)}
+    .hint{font-size:12px;color:var(--muted)}
+    .actions{display:flex;gap:12px;align-items:center;margin-top:8px}
+    button.primary{background:linear-gradient(90deg,var(--accent),#66a9ff);padding:12px 18px;border-radius:12px;border:none;color:white;font-weight:600;cursor:pointer;box-shadow:0 8px 30px rgba(26,115,232,0.18);transition:transform .12s ease}
+    button.primary:active{transform:translateY(1px)}
+    button.ghost{background:transparent;border:1px solid var(--glass);padding:10px 14px;border-radius:10px;color:var(--muted);cursor:pointer}
+    .foot{display:flex;justify-content:space-between;align-items:center;margin-top:6px;color:var(--muted);font-size:13px}
+    .preview{
+      margin-top:6px;padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid var(--glass);font-size:13px;color:var(--muted);min-height:86px;display:flex;align-items:center;gap:10px
+    }
+    .snack{position:fixed;left:50%;transform:translateX(-50%) translateY(20px);bottom:26px;background:linear-gradient(90deg,var(--accent),#66a9ff);padding:12px 18px;border-radius:10px;color:white;box-shadow:0 10px 40px rgba(10,30,90,0.4);opacity:0;pointer-events:none;transition:opacity .28s ease,transform .28s ease}
+    .snack.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    @media (max-width:880px){
+      .container{grid-template-columns:1fr;}
+      .left{order:2}
+      .right{order:1}
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="application">
+    <aside class="left">
+      <div class="brand">
+        <div class="logo">MR</div>
+        <div>
+          <h1>Movie Review</h1>
+          <p class="lead">Submit crisp, honest reviews. Designed with a clean, Google-inspired dark aesthetic.</p>
+        </div>
+      </div>
+      <div class="meta">
+        <div class="chip">Professional</div>
+        <div class="chip">Accessible</div>
+        <div class="chip">Responsive</div>
+      </div>
+      <div style="flex:1;display:flex;align-items:flex-end">
+        <div>
+          <div style="font-size:12px;color:var(--muted);">Tips</div>
+          <div style="margin-top:8px;color:var(--muted);font-size:13px;max-width:260px">Keep reviews short and specific. Use the rating to reflect overall impression.</div>
+        </div>
+      </div>
+    </aside>
+    <main class="right">
+      <form id="reviewForm">
+        <div class="row">
+          <label class="field">
+            <span style="display:flex;align-items:center;gap:8px">Reviewer Name<span class="required">*</span></span>
+            <input id="name" name="name" type="text" required autocomplete="name" placeholder="Your full name" />
+          </label>
+          <label class="field">
+            <span style="display:flex;align-items:center;gap:8px">Movie Title<span class="required">*</span></span>
+            <input id="movie" name="movie" type="text" required placeholder="Movie name" />
+          </label>
+        </div>
+        <label class="field">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;align-items:center;gap:8px"><span style="font-size:13px">Rating</span><span class="required">*</span></div>
+            <div class="hint">Select 1 to 5 stars</div>
+          </div>
+          <div class="rating">
+            <div class="stars">
+              <input type="radio" id="r5" name="rating" value="5" required />
+              <label for="r5" aria-label="5 stars"></label>
+              <input type="radio" id="r4" name="rating" value="4" />
+              <label for="r4" aria-label="4 stars"></label>
+              <input type="radio" id="r3" name="rating" value="3" />
+              <label for="r3" aria-label="3 stars"></label>
+              <input type="radio" id="r2" name="rating" value="2" />
+              <label for="r2" aria-label="2 stars"></label>
+              <input type="radio" id="r1" name="rating" value="1" />
+              <label for="r1" aria-label="1 star"></label>
+            </div>
+          </div>
+        </label>
+        <label class="field">
+          <span style="display:flex;align-items:center;gap:8px">Review Text</span>
+          <textarea id="review" name="review" placeholder="Write your review here (what you liked, didn't like, memorable moments)..."></textarea>
+        </label>
+        <label class="field" style="flex-direction:row;align-items:center;justify-content:space-between">
+          <div style="display:flex;flex-direction:column">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div class="toggle">
+                <input id="rec" type="checkbox" name="recommend" />
+                <div class="checkbox" role="switch" aria-checked="false" tabindex="0">
+                  <div class="knob"></div>
+                </div>
+              </div>
+              <div style="font-size:14px">Recommend Movie</div>
+            </div>
+            <div class="hint">Check if you'd recommend this movie to friends</div>
+          </div>
+          <div style="text-align:right">
+            <div class="hint">Preview</div>
+            <div id="preview" class="preview">No review yet</div>
+          </div>
+        </label>
+        <div class="actions">
+          <button type="submit" class="primary">Submit Review</button>
+          <button type="reset" class="ghost">Reset</button>
+        </div>
+        <div class="foot"><div>Saved locally</div><div>Secure • 256-bit</div></div>
+      </form>
+    </main>
+  </div>
+  <div id="snack" class="snack">Review submitted</div>
+  <script>
+    const form=document.getElementById('reviewForm')
+    const preview=document.getElementById('preview')
+    const snack=document.getElementById('snack')
+    function updatePreview(){
+      const name=document.getElementById('name').value.trim()
+      const movie=document.getElementById('movie').value.trim()
+      const rating=document.querySelector('input[name="rating"]:checked')
+      const review=document.getElementById('review').value.trim()
+      const rec=document.getElementById('rec').checked
+      let lines=[]
+      if(movie)lines.push('"'+movie+'"')
+      if(rating)lines.push(`${rating.value}★`)
+      if(review)lines.push(review.length>120?review.slice(0,120)+'…':review)
+      if(rec)lines.push('Recommended')
+      if(name)lines.push('by '+name)
+      preview.textContent=lines.length?lines.join(' • '):'No review yet'
+    }
+    document.addEventListener('input',updatePreview)
+    form.addEventListener('submit',e=>{
+      e.preventDefault()
+      const data=new FormData(form)
+      const payload={
+        name:data.get('name'),
+        movie:data.get('movie'),
+        rating:data.get('rating'),
+        review:data.get('review'),
+        recommend:!!data.get('recommend')
+      }
+      console.log('Submitted',payload)
+      snack.classList.add('show')
+      setTimeout(()=>snack.classList.remove('show'),2400)
+      form.reset()
+      updatePreview()
+    })
+    const switchEl=document.querySelector('.checkbox')
+    const realCheckbox=document.getElementById('rec')
+    switchEl.addEventListener('click',()=>{realCheckbox.checked=!realCheckbox.checked;realCheckbox.dispatchEvent(new Event('input'))})
+    switchEl.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ') {e.preventDefault();realCheckbox.checked=!realCheckbox.checked;realCheckbox.dispatchEvent(new Event('input'))}})
+    updatePreview()
+  </script>
+</body>
+</html>

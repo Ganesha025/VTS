@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Event Registration</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #000;
+    --surface: #0c0c0c;
+    --surface-2: #111;
+    --text: #eaeaea;
+    --accent: #6aa8ff;
+    --accent-2: #3c7dff;
+    --radius: 18px;
+    --transition: 0.3s ease;
+    --glow: 0 0 18px rgba(90,150,255,0.35);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background: radial-gradient(circle at 20% 20%, #0f1a2e, #000);
+    font-family: "Inter", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text);
+    padding: 20px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 480px;
+    background: rgba(15,15,15,0.85);
+    backdrop-filter: blur(14px);
+    padding: 45px;
+    border-radius: var(--radius);
+    border: 1px solid #1c1c1c;
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+    animation: fadeIn 0.7s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    background: linear-gradient(90deg, #e8e8e8, #6aa8ff);
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .input-group {
+    margin-bottom: 25px;
+  }
+
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  input, textarea {
+    width: 100%;
+    padding: 15px;
+    background: var(--surface-2);
+    border: 1px solid #222;
+    border-radius: var(--radius);
+    font-size: 15px;
+    color: var(--text);
+    transition: var(--transition);
+  }
+
+  input:focus, textarea:focus {
+    border-color: var(--accent);
+    box-shadow: var(--glow);
+    background: #0d0d0d;
+  }
+
+  textarea {
+    height: 110px;
+    resize: none;
+  }
+
+  .checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    cursor: pointer;
+  }
+
+  .checkbox-group input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--accent);
+  }
+
+  button {
+    width: 100%;
+    padding: 16px;
+    background: var(--accent);
+    border: none;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 600;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 0 12px rgba(90,150,255,0.4);
+  }
+
+  button:hover {
+    background: var(--accent-2);
+    box-shadow: 0 0 24px rgba(90,150,255,0.55);
+    transform: translateY(-3px);
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>Event Registration</h1>
+    <form>
+      <div class="input-group">
+        <label>Full Name</label>
+        <input type="text" required />
+      </div>
+
+      <div class="input-group">
+        <label>Email Address</label>
+        <input type="email" required />
+      </div>
+
+      <div class="input-group">
+        <label>Phone Number</label>
+        <input type="text" pattern="[0-9]{10}" placeholder="10-digit number" />
+      </div>
+
+      <div class="input-group">
+        <label>Dietary Restrictions</label>
+        <textarea></textarea>
+      </div>
+
+      <div class="input-group">
+        <label>Workshop Selection</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" /> UI/UX Design</label>
+          <label><input type="checkbox" /> Full-Stack Development</label>
+          <label><input type="checkbox" /> AI & Machine Learning</label>
+          <label><input type="checkbox" /> Cloud Computing</label>
+        </div>
+      </div>
+
+      <button type="submit">Register Now</button>
+    </form>
+  </div>
+</body>
+</html>
