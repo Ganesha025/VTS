@@ -18,11 +18,7 @@
     --glow: 0 0 18px rgba(90,150,255,0.35);
   }
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
     background: radial-gradient(circle at 20% 20%, #0f1a2e, #000);
@@ -32,6 +28,7 @@
     align-items: center;
     color: var(--text);
     padding: 20px;
+    min-height: 100vh;
   }
 
   .card {
@@ -61,9 +58,7 @@
     color: transparent;
   }
 
-  .input-group {
-    margin-bottom: 25px;
-  }
+  .input-group { margin-bottom: 25px; position: relative; }
 
   label {
     font-size: 14px;
@@ -87,25 +82,36 @@
     border-color: var(--accent);
     box-shadow: var(--glow);
     background: #0d0d0d;
+    outline: none;
   }
 
-  textarea {
-    height: 110px;
-    resize: none;
+  textarea { height: 110px; resize: none; }
+
+  .checkbox-group {
+    display: flex;flex-wrap: wrap;
+    gap: 12px;
   }
 
-  .checkbox-group label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 0;
+  .checkbox-label {
+    padding: 10px 15px;
+    border-radius: var(--radius);
+    background: var(--surface);
     cursor: pointer;
+    transition: 0.3s;
+    user-select: none;
+    border: 1px solid #222;
   }
 
-  .checkbox-group input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    accent-color: var(--accent);
+  .checkbox-label:hover {
+    border-color: var(--accent);
+    box-shadow: var(--glow);
+  }
+
+  .checkbox-label.active {
+    background: var(--accent);
+    color: #000;
+    box-shadow: 0 0 20px rgba(90,150,255,0.7);
+    border-color: var(--accent-2);
   }
 
   button {
@@ -113,7 +119,7 @@
     padding: 16px;
     background: var(--accent);
     border: none;
-    color: #fff;
+    color: black;
     font-size: 17px;
     font-weight: 600;
     border-radius: var(--radius);
@@ -127,44 +133,150 @@
     box-shadow: 0 0 24px rgba(90,150,255,0.55);
     transform: translateY(-3px);
   }
+
+  .error-msg {
+    color: #ff6b6b;
+    font-size: 13px;
+    margin-top: 6px;
+    display: none;
+  }
+
+  input.invalid, textarea.invalid {
+    border-color: #ff6b6b;
+    box-shadow: 0 0 12px rgba(255, 107, 107, 0.5);
+  }
 </style>
 </head>
 <body>
   <div class="card">
     <h1>Event Registration</h1>
-    <form>
+    <form id="regForm" novalidate>
       <div class="input-group">
         <label>Full Name</label>
-        <input type="text" required />
+        <input type="text" id="name" placeholder="Enter Name" required />
+        <div class="error-msg">Name must be at least 3 characters</div>
       </div>
 
       <div class="input-group">
         <label>Email Address</label>
-        <input type="email" required />
+        <input type="email" id="email" placeholder="Enter Mail id" required />
+        <div class="error-msg">Enter a valid email address</div>
       </div>
-
-      <div class="input-group">
-        <label>Phone Number</label>
-        <input type="text" pattern="[0-9]{10}" placeholder="10-digit number" />
-      </div>
+<div class="input-group">
+  <label>Phone Number</label>
+  <div style="display:flex;align-items:center;gap:6px;">
+    <span style="
+      padding: 15px;
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid #222;
+      color: var(--text);
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    ">+91</span>
+    <input type="text" id="phone" pattern="[0-9]{10}" placeholder="10-digit number" style="flex:1;" />
+  </div>
+  <div class="error-msg">Phone must be 10 digits</div>
+</div>
 
       <div class="input-group">
         <label>Dietary Restrictions</label>
-        <textarea></textarea>
+        <textarea id="diet" placeholder="Enter"></textarea>
       </div>
 
       <div class="input-group">
         <label>Workshop Selection</label>
         <div class="checkbox-group">
-          <label><input type="checkbox" /> UI/UX Design</label>
-          <label><input type="checkbox" /> Full-Stack Development</label>
-          <label><input type="checkbox" /> AI & Machine Learning</label>
-          <label><input type="checkbox" /> Cloud Computing</label>
+          <div class="checkbox-label" data-value="UI/UX Design">UI/UX Design</div>
+          <div class="checkbox-label" data-value="Full-Stack Development">Full-Stack Development</div>
+          <div class="checkbox-label" data-value="AI & Machine Learning">AI & Machine Learning</div>
+          <div class="checkbox-label" data-value="Cloud Computing">Cloud Computing</div>
         </div>
       </div>
 
       <button type="submit">Register Now</button>
     </form>
   </div>
+
+<script>
+const form = document.getElementById('regForm');
+const nameInput = document.getElementById('name');
+const emailInput = document.getElementById('email');
+const phoneInput = document.getElementById('phone');
+const checkboxes = document.querySelectorAll('.checkbox-label');
+
+// JS Validation Functions
+function validateName() {
+  if(nameInput.value.trim().length < 3){
+    nameInput.classList.add('invalid');
+    nameInput.nextElementSibling.style.display = 'block';
+    return false;
+  } else {
+    nameInput.classList.remove('invalid');
+    nameInput.nextElementSibling.style.display = 'none';
+    return true;
+  }
+}
+
+function validateEmail() {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if(!regex.test(emailInput.value)){
+    emailInput.classList.add('invalid');
+    emailInput.nextElementSibling.style.display = 'block';
+    return false;
+  } else {
+    emailInput.classList.remove('invalid');
+    emailInput.nextElementSibling.style.display = 'none';
+    return true;
+  }
+}
+
+function validatePhone() {
+  const regex = /^[0-9]{10}$/;
+  if(phoneInput.value && !regex.test(phoneInput.value)){
+    phoneInput.classList.add('invalid');
+    phoneInput.nextElementSibling.style.display = 'block';
+    return false;
+  } else {
+    phoneInput.classList.remove('invalid');
+    phoneInput.nextElementSibling.style.display = 'none';
+    return true;
+  }
+}
+
+// Realtime validation
+nameInput.addEventListener('input', validateName);
+emailInput.addEventListener('input', validateEmail);
+phoneInput.addEventListener('input', validatePhone);
+
+// Toggle active state on text click
+checkboxes.forEach(cb => {
+  cb.addEventListener('click', () => {
+    cb.classList.toggle('active');
+  });
+});
+
+// Form Submit
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+  const isNameValid = validateName();
+  const isEmailValid = validateEmail();
+  const isPhoneValid = validatePhone();
+
+  if(isNameValid && isEmailValid && isPhoneValid){
+    const selectedWorkshops = [...checkboxes]
+      .filter(cb => cb.classList.contains('active'))
+      .map(cb => cb.dataset.value);
+
+    alert(`✅ Registration successful!\nWorkshops: ${selectedWorkshops.join(', ')}`);
+    form.reset();
+    checkboxes.forEach(cb => cb.classList.remove('active'));
+  } else {
+    alert('⚠️ Please fix the errors before submitting.');
+  }
+});
+</script>
 </body>
 </html>
